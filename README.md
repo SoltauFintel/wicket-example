@@ -1,2 +1,5 @@
-# wicket-example
-kleines Wicket 6 Beispielprojekt
+# Kleines Wicket Beispielprojekt
+
+Kleine Webanwendung, mit Apache Wicket 6 gebaut
+
+Build: Gradle
