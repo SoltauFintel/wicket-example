@@ -1,7 +1,5 @@
 package de.mwvb.wicket.example;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -15,16 +13,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class NamenPage extends WebPage {
-	private static List<Namen> namenList = new ArrayList<Namen>(); // TODO noch quick-n-dirty
-	
-	static { // Demodaten anlegen
-		Namen n = new Namen();
-		n.setName("Joey");
-		namenList.add(n);
-		n = new Namen();
-		n.setName("Willy");
-		namenList.add(n);
-	}
+	private NamenDAO namenDAO = new NamenDAO(); // TODO D.I.
 	
 	public NamenPage() {
 		Namen namen = new Namen();
@@ -41,24 +30,15 @@ public class NamenPage extends WebPage {
 		
 		@Override
 		protected void onSubmit() {
-			Namen copy = new Namen();
-			copy.setName(getModelObject().getName());
-			namenList.add(copy);
+			namenDAO.save(getModelObject().getName());
 		}
 	}
 	
 	private PropertyListView<Namen> buildRows() {
-		IModel<List<Namen>> model;
-		model = new LoadableDetachableModel<List<Namen>>() {
+		IModel<List<Namen>> model = new LoadableDetachableModel<List<Namen>>() {
 			@Override
 			protected List<Namen> load() {
-				namenList.sort(new Comparator<Namen>() {
-					@Override
-					public int compare(Namen a, Namen b) {
-						return a.getName().toLowerCase().compareTo(b.getName().toLowerCase());
-					}
-				});
-				return namenList;
+				return namenDAO.getNamen();
 			}
 		};
 		return new PropertyListView<Namen>("rows", model) {
