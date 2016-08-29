@@ -1,0 +1,13 @@
+apply plugin: 'jetty' // enthält java und war
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+	compile 'org.apache.wicket:wicket:6.24.0'
+}
+
+repositories {
+	mavenCentral()
+}
